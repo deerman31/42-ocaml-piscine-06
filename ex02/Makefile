@@ -3,7 +3,7 @@ OCAMLOPT = ocamlopt
 FLAGS = -I +unix -I build unix.cmxa -intf-suffix .disabled
 
 # ソースファイル
-ML_SOURCES = people.ml doctor.ml main.ml
+ML_SOURCES = people.ml doctor.ml dalek.ml main.ml
 CMX_OBJECTS = $(ML_SOURCES:%.ml=build/%.cmx)
 
 # 実行ファイル名
