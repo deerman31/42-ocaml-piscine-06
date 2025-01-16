@@ -1,10 +1,9 @@
 # コンパイラとフラグの設定
 OCAMLOPT = ocamlopt
-FLAGS = -I +unix -I build unix.cmxa
+FLAGS = -I +unix -I build unix.cmxa -intf-suffix .disabled
 
 # ソースファイル
-MLI_SOURCES = people.mli
-ML_SOURCES = people.ml main.ml
+ML_SOURCES = people.ml main.ml 
 CMX_OBJECTS = $(ML_SOURCES:%.ml=build/%.cmx)
 
 # 実行ファイル名
@@ -17,19 +16,8 @@ all: $(TARGET)
 build:
 	mkdir -p build
 
-# インターフェースファイル（.mli）のコンパイル
-build/%.cmi: %.mli | build
-	$(OCAMLOPT) $(FLAGS) -c $< -o $@
-	if [ -f *.cmi ]; then mv *.cmi build/; fi
-
 # オブジェクトファイル（.cmx）のコンパイル
-build/%.cmx: %.ml build/%.cmi | build
-	$(OCAMLOPT) $(FLAGS) -c $< -o $@
-	if [ -f *.cmi ]; then mv *.cmi build/; fi
-	if [ -f *.o ]; then mv *.o build/; fi
-
-# .mliがない.mlファイルのコンパイル用ルール
-build/main.cmx: main.ml | build
+build/%.cmx: %.ml | build
 	$(OCAMLOPT) $(FLAGS) -c $< -o $@
 	if [ -f *.cmi ]; then mv *.cmi build/; fi
 	if [ -f *.o ]; then mv *.o build/; fi
